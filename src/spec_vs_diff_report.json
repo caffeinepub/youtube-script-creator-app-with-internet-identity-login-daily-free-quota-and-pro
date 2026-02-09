@@ -1,0 +1,50 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T17:08:35.621Z",
+  "summary": "Diff adds user-facing error translation, Stripe configuration preflight check in Upgrade flow, payment success/failure pages with simple routing, and an ops note describing the deployment failure. Backend adds an admin-gated `isStripeConfigured` query, but this likely blocks non-admin users from checking Stripe readiness and may prevent checkout even when Stripe is configured. Deployment success itself cannot be verified from the diff.",
+  "missing_requirements": [
+    {
+      "id": "REQ-14",
+      "requirement": "Fix the blocking deployment issue so network deployment completes successfully without \"Deployment didn't complete\", and address the root cause via code/config changes.",
+      "reason": "The diff includes an ops note describing suspected causes and frontend changes, but there is no verifiable evidence (from the diff summary) of the actual deployment/build configuration fix or confirmation that a deployment now succeeds. No deployment config/build pipeline changes are shown in the provided diff summary.",
+      "evidence": [
+        "frontend/OPS-NOTE-release-deploy.md"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "requirement": "If Stripe is configured, the Upgrade to Pro flow can create a Checkout Session and redirect to Stripe Checkout successfully.",
+      "reason": "`backend/main.mo` restricts `isStripeConfigured()` to admins only. The frontend’s `useIsStripeConfigured()` calls this as any user; for non-admins it will throw and the hook returns `false`, which makes `UpgradePro` treat Stripe as not configured and blocks checkout even when it is configured.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/components/UpgradePro.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Hard-coded support contact email displayed on the payment failure page (support@example.com).",
+      "reason": "BuildRequest does not ask to add or expose support contact information; this is additional user-facing content beyond publish-readiness checks and error handling.",
+      "evidence": [
+        "frontend/src/components/PaymentFailure.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/OPS-NOTE-release-deploy.md",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/PaymentFailure.tsx",
+    "frontend/src/components/PaymentSuccess.tsx",
+    "frontend/src/components/ProfileSetup.tsx",
+    "frontend/src/components/UpgradePro.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/utils/userFacingError.ts",
+    "project_state.json"
+  ]
+}

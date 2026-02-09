@@ -1,2 +1,3 @@
-# youtube-script-creator-app-with-internet-identity-login-daily-free-quota-and-pro
-Exported from Caffeine project: YouTube Script Creator app with Internet Identity login, daily free quota, and Pro subscription
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

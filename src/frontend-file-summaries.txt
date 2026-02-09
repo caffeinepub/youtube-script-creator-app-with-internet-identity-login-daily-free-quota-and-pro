@@ -1,0 +1,15 @@
+{
+  "frontend/src/App.tsx": "Main application component with authentication state management, profile setup flow, simple client-side routing for payment success/failure pages, and Toaster for notifications.",
+  "frontend/src/components/Header.tsx": "Application header with logo, title, user greeting, and login/logout button, now with toast notifications for login errors using the userFacingError utility.",
+  "frontend/src/components/Footer.tsx": "Footer component with copyright notice and Caffeine.ai attribution with UTM tracking.",
+  "frontend/src/components/ProfileSetup.tsx": "Profile setup form that prompts new users to enter their name after first login, now with visible error feedback using Alert component when profile save fails.",
+  "frontend/src/components/UpgradePro.tsx": "Pro plan upgrade page with Stripe configuration preflight check, clear error messaging when payment system is unavailable, and enhanced checkout flow validation.",
+  "frontend/src/components/UpiHelpSection.tsx": "Educational component explaining how UPI payments work through Stripe Checkout and warning against direct UPI ID payments.",
+  "frontend/src/components/StripeUpiChecklistDialog.tsx": "Dialog component with step-by-step accordion checklist for admins to enable UPI in Stripe Dashboard.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for user profile management, Stripe configuration check, and checkout session creation with enhanced error handling using the userFacingError utility.",
+  "frontend/src/index.css": "Global styles with OKLCH color system using purple/violet theme for both light and dark modes.",
+  "frontend/src/utils/userFacingError.ts": "Utility function that translates technical errors (actor unavailable, Stripe configuration, authorization, etc.) into clear English user-facing messages, preventing raw backend traps from being exposed.",
+  "frontend/src/components/PaymentSuccess.tsx": "Payment success confirmation page that displays after successful Stripe checkout completion, with a continue button to return to the app.",
+  "frontend/src/components/PaymentFailure.tsx": "Payment failure/cancellation page that displays when Stripe checkout is cancelled or fails, with retry option and support contact information.",
+  "frontend/OPS-NOTE-release-deploy.md": "Operations note documenting the \"Deployment didn't complete\" failure mode, root cause analysis, fixes applied, pre-publish checklist, and prevention measures for future deployments."
+}

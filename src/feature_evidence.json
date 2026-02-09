@@ -1,0 +1,76 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-investigate-and-fix-the-blocking-deployment-issue-where-network-deployment-fails-with-the-generic-error-deployment-didn-t-complete-so-the-app-can-be-successfully-published",
+      "featureTitle": "Investigate and fix the blocking deployment issue where network deployment fails with the generic error \"Deployment didn't complete\", so the app can be successfully published.",
+      "files": [
+        "frontend/OPS-NOTE-release-deploy.md",
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-pre-publish-readiness-check-in-the-admin-user-flow-to-prevent-publishing-a-build-that-cannot-take-payments-due-to-missing-stripe-configuration-and-ensure-all-user-facing-messages-remain-in-english",
+      "featureTitle": "Add a pre-publish readiness check in the admin/user flow to prevent publishing a build that cannot take payments due to missing Stripe configuration, and ensure all user-facing messages remain in English.",
+      "files": [
+        "frontend/src/components/UpgradePro.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-perform-a-release-smoke-test-pass-for-the-core-published-user-journeys-login-profile-setup-and-pro-upgrade-checkout-initiation-and-ensure-failures-provide-clear-english-error-messages-instead-of-generic-or-technical-errors",
+      "featureTitle": "Perform a release smoke test pass for the core published user journeys (login, profile setup, and Pro upgrade checkout initiation) and ensure failures provide clear English error messages instead of generic or technical errors.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/components/PaymentFailure.tsx",
+        "frontend/src/components/PaymentSuccess.tsx",
+        "frontend/src/components/ProfileSetup.tsx",
+        "frontend/src/components/UpgradePro.tsx",
+        "frontend/src/utils/userFacingError.ts"
+      ],
+      "components": [
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-16"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

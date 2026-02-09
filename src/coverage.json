@@ -1,0 +1,88 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T17:08:35.624Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-14",
+        "summary": "Investigate and fix the blocking deployment issue where network deployment fails with the generic error \"Deployment didn't complete\", so the app can be successfully published.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/hooks/useActor.ts",
+          "frontend/src/hooks/useInternetIdentity.ts",
+          "frontend/OPS-NOTE-release-deploy.md"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/OPS-NOTE-release-deploy.md"
+        ]
+      },
+      {
+        "id": "REQ-15",
+        "summary": "Add a pre-publish readiness check in the admin/user flow to prevent publishing a build that cannot take payments due to missing Stripe configuration, and ensure all user-facing messages remain in English.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/UpgradePro.tsx",
+          "frontend/src/components/StripeUpiChecklistDialog.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/UpgradePro.tsx"
+        ]
+      },
+      {
+        "id": "REQ-16",
+        "summary": "Perform a release smoke test pass for the core published user journeys (login, profile setup, and Pro upgrade checkout initiation) and ensure failures provide clear English error messages instead of generic or technical errors.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/utils/userFacingError.ts",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/components/ProfileSetup.tsx",
+          "frontend/src/components/UpgradePro.tsx",
+          "frontend/src/components/PaymentSuccess.tsx",
+          "frontend/src/components/PaymentFailure.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/utils/userFacingError.ts",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/components/ProfileSetup.tsx",
+          "frontend/src/components/UpgradePro.tsx",
+          "frontend/src/components/PaymentSuccess.tsx",
+          "frontend/src/components/PaymentFailure.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/README.md",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/OPS-NOTE-release-deploy.md",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/PaymentFailure.tsx",
+    "frontend/src/components/PaymentSuccess.tsx",
+    "frontend/src/components/ProfileSetup.tsx",
+    "frontend/src/components/UpgradePro.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/utils/userFacingError.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

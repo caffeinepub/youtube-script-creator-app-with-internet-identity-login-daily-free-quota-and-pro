@@ -1,0 +1,88 @@
+{
+  "kind": "build_request",
+  "title": "Prepare production release and resolve deployment failure",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-14",
+      "text": "Investigate and fix the blocking deployment issue where network deployment fails with the generic error \"Deployment didn't complete\", so the app can be successfully published.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "Now ready ho gya h to publish kr do",
+          "Deployment to the network failed with a generic 'Deployment didn't complete' error (needs investigation if blocking releases)."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A deployment to the target network completes successfully without the \"Deployment didn't complete\" error.",
+        "If the issue is caused by a runtime trap, missing configuration, or build failure, the root cause is identified and addressed (code/config change), and deployment succeeds.",
+        "A short, developer-readable note is added to the repo (e.g., in a README/ops note) describing what caused the failure and how it was fixed to prevent recurrence."
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Add a pre-publish readiness check in the admin/user flow to prevent publishing a build that cannot take payments due to missing Stripe configuration, and ensure all user-facing messages remain in English.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "Now ready ho gya h to publish kr do"
+        ]
+      },
+      "acceptanceCriteria": [
+        "If Stripe is not configured, the UI shows a clear English message indicating Stripe must be configured before users can start a checkout (no raw Motoko trap message is exposed).",
+        "If Stripe is configured, the Upgrade to Pro flow can create a Checkout Session and redirect to Stripe Checkout successfully.",
+        "All newly introduced user-facing text is in English."
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Perform a release smoke test pass for the core published user journeys (login, profile setup, and Pro upgrade checkout initiation) and ensure failures provide clear English error messages instead of generic or technical errors.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "The update is live now — does the payment flow look okay on your side?",
+          "Now ready ho gya h to publish kr do"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can sign in with Internet Identity and reach the app without getting stuck on a loading state.",
+        "If the user has no profile, Profile Setup is reachable and saving the profile succeeds.",
+        "From the Upgrade to Pro page, clicking “Upgrade Now” while authenticated triggers checkout session creation and redirects to Stripe Checkout.",
+        "Any failure states encountered during the above flows display clear English messages (no opaque errors like \"Deployment didn't complete\" shown to end users)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo; only add backend/migration.mo if an actual state upgrade/migration is required.",
+    "Do not edit frontend files under frontend/src/components/ui or other immutablePaths listed in SYSTEM_CONTEXT; compose existing UI components instead.",
+    "Do not integrate or store any personal UPI ID in the app; UPI must only be offered via Stripe Checkout based on Stripe Dashboard configuration."
+  ],
+  "nonGoals": [
+    "Adding new product features beyond publish readiness and deployment stabilization.",
+    "Implementing any third-party authentication other than Internet Identity.",
+    "Adding any non-Stripe payment rails or direct UPI ID payments."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

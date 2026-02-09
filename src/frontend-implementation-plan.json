@@ -1,0 +1,111 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Release readiness: deployment stabilization and Stripe preflight checks",
+  "requirements": [
+    {
+      "id": "REQ-14",
+      "summary": "Add frontend diagnostics and release notes to help isolate and prevent the blocking deployment failure, and ensure publish builds fail fast with actionable info.",
+      "acceptanceCriteria": [
+        "A deployment to the target network completes successfully without the \"Deployment didn't complete\" error.",
+        "If the issue is caused by a runtime trap, missing configuration, or build failure, the root cause is identified and addressed (code/config change), and deployment succeeds.",
+        "A short, developer-readable note is added to the repo (e.g., in a README/ops note) describing what caused the failure and how it was fixed to prevent recurrence."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a minimal app-level error surface (non-technical English) for unexpected initialization/runtime failures so deploy-time/runtime traps do not present as generic failures; include an optional debug section gated by a build flag to aid investigation of deployment failures without exposing technical details to end users."
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Harden actor initialization by catching and translating initialization failures into controlled UI-safe errors (avoid leaking raw errors), and add lightweight console diagnostics to help root-cause network deploy issues (e.g., misconfig/identity init) when reproducing the publish flow."
+        },
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Ensure initialization/login failures cannot leave the app in an indefinite loading state; provide deterministic state transitions and a clear English error state that can be surfaced during publish smoke tests."
+        },
+        {
+          "path": "frontend/OPS-NOTE-release-deploy.md",
+          "operation": "create",
+          "description": "Add a short developer-readable ops note describing the observed \"Deployment didn't complete\" failure mode, the identified frontend-side contributing cause(s) (e.g., runtime init crash, misconfiguration surfaced via logs), the fix applied, and a quick pre-publish checklist to prevent recurrence."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Add a Stripe configuration preflight check that blocks checkout until Stripe is configured, with clear English UI messaging.",
+      "acceptanceCriteria": [
+        "If Stripe is not configured, the UI shows a clear English message indicating Stripe must be configured before users can start a checkout (no raw Motoko trap message is exposed).",
+        "If Stripe is configured, the Upgrade to Pro flow can create a Checkout Session and redirect to Stripe Checkout successfully.",
+        "All newly introduced user-facing text is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a React Query hook to call the backend capability that checks whether Stripe is configured, and update the checkout mutation to translate Stripe-related failures into friendly English errors. Use the selected stripe component integration expectations as the reference. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/UpgradePro.tsx",
+          "operation": "modify",
+          "description": "Use the selected stripe component approach to preflight Stripe readiness (via isStripeConfigured) before enabling/attempting checkout; show a clear English message when not configured and ensure no raw backend trap text is displayed. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/StripeUpiChecklistDialog.tsx",
+          "operation": "modify",
+          "description": "Update copy and linking text (if needed) so any newly introduced messaging related to Stripe configuration remains concise and English-only, and can be referenced from the blocked checkout state. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Add user-journey smoke-test hardening for login, profile setup, and Pro upgrade initiation with clear English failure messages.",
+      "acceptanceCriteria": [
+        "User can sign in with Internet Identity and reach the app without getting stuck on a loading state.",
+        "If the user has no profile, Profile Setup is reachable and saving the profile succeeds.",
+        "From the Upgrade to Pro page, clicking “Upgrade Now” while authenticated triggers checkout session creation and redirects to Stripe Checkout.",
+        "Any failure states encountered during the above flows display clear English messages (no opaque errors like \"Deployment didn't complete\" shown to end users)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/userFacingError.ts",
+          "operation": "create",
+          "description": "Create a small utility to normalize/translate common technical errors (actor unavailable, authorization failures, Stripe not configured, JSON parse failures) into clear English user-facing messages suitable for alerts/toasts, without exposing traps or internal strings."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "modify",
+          "description": "Improve login/logout error handling so failed sign-in cannot silently stall; when login fails, surface a clear English message (and keep existing behavior of clearing and retrying when already authenticated) using the shared userFacingError utility."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetup.tsx",
+          "operation": "modify",
+          "description": "Add visible English error feedback when profile saving fails (instead of console-only), and ensure the form cannot appear to succeed when the save mutation errors; use the shared userFacingError utility."
+        },
+        {
+          "path": "frontend/src/components/UpgradePro.tsx",
+          "operation": "modify",
+          "description": "Ensure Upgrade Now is only actionable when authenticated and Stripe preflight passes; on any failure (including Stripe session missing url), display a clear English message and never attempt to navigate/redirect to an invalid URL. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/PaymentSuccess.tsx",
+          "operation": "create",
+          "description": "Create a simple payment success view that confirms checkout completion in clear English and provides a safe path back into the app."
+        },
+        {
+          "path": "frontend/src/components/PaymentFailure.tsx",
+          "operation": "create",
+          "description": "Create a simple payment failure view that explains the checkout was cancelled/failed in clear English and provides next steps (retry/contact support)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire PaymentSuccess and PaymentFailure views into the app so the successUrl/cancelUrl paths used by checkout resolve to user-friendly pages (without introducing new router dependencies unless already present), ensuring the smoke-test checkout initiation has a complete return path."
+        }
+      ]
+    }
+  ]
+}

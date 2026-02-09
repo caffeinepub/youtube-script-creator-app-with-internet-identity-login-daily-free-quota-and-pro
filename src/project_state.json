@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Build a Bubble-based AI app for YouTube script creation with login/signup, free tier limited to 2 scripts/day, and a Pro subscription (₹199) with unlimited scripts.",
+  "architectural_notes": [
+    "App will be built in Bubble with backend AI API integration for script generation.",
+    "Implement plan-based access control: Free (2 scripts/day) vs Pro (unlimited).",
+    "Payments will use Stripe Checkout; enable UPI as a payment method in Stripe (for supported regions) so India users can pay via UPI within the Stripe flow (not via direct PhonePe/UPI ID transfer)."
+  ],
+  "known_issues": [
+    "Deployment to the network failed with a generic 'Deployment didn't complete' error (needs investigation if blocking releases)."
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-authentication-using-internet-identity-so-users-can-sign-in-out-and-the-app-can-reliably-identify-a-user-for-quota-tracking-and-saved-scripts",
+      "title": "Implement authentication using Internet Identity so users can sign in/out and the app can reliably identify a user for quota tracking and saved scripts.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-core-script-generation-ui-inputs-for-video-topic-target-audience-tone-desired-length-and-optional-key-points-a-generate-button-and-a-results-panel-that-displays-the-generated-youtube-script-in-english-with-copy-to-clipboard",
+      "title": "Create the core script-generation UI: inputs for video topic, target audience, tone, desired length, and optional key points; a Generate button; and a results panel that displays the generated YouTube script in English with copy-to-clipboard.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enforce-the-free-tier-quota-authenticated-free-users-can-generate-at-most-2-scripts-per-utc-day-once-exceeded-generation-is-blocked-with-a-clear-english-error-message-and-an-upgrade-cta",
+      "title": "Enforce the free-tier quota: authenticated Free users can generate at most 2 scripts per UTC day; once exceeded, generation is blocked with a clear English error message and an upgrade CTA.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-pro-plan-199-entitlement-pro-users-have-unlimited-script-generations-and-the-ui-clearly-indicates-current-plan-free-pro-and-remaining-daily-quota-for-free-users",
+      "title": "Add a Pro plan (₹199) entitlement: Pro users have unlimited script generations, and the UI clearly indicates current plan (Free/Pro) and remaining daily quota for Free users.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-stripe-based-pro-purchase-flow-for-199-using-stripe-checkout-frontend-triggers-checkout-backend-creates-the-checkout-session-securely-and-backend-updates-the-user-s-pro-entitlement-upon-verified-payment-completion",
+      "title": "Implement Stripe-based Pro purchase flow for ₹199 using Stripe Checkout: frontend triggers checkout, backend creates the Checkout Session securely, and backend updates the user’s Pro entitlement upon verified payment completion.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-scripts-page-section-that-lists-the-signed-in-user-s-saved-scripts-with-ability-to-open-a-script-detail-view-and-copy-it-include-timestamps-and-the-original-topic",
+      "title": "Add a Scripts page/section that lists the signed-in user’s saved scripts with ability to open a script detail view and copy it; include timestamps and the original topic.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-establish-a-coherent-visual-theme-for-the-app-colors-typography-spacing-component-styling-and-apply-it-consistently-across-auth-generation-pricing-upgrade-and-history-screens-avoid-a-blue-purple-default-palette",
+      "title": "Establish a coherent visual theme for the app (colors, typography, spacing, component styling) and apply it consistently across auth, generation, pricing/upgrade, and history screens (avoid a blue/purple default palette).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-logo-simple-hero-empty-state-illustration-and-render-them-in-the-ui-public-static-assets-not-served-via-the-backend",
+      "title": "Add generated static image assets (logo + simple hero/empty-state illustration) and render them in the UI (public static assets, not served via the backend).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-small-pay-with-upi-help-section-in-the-upgrade-pro-purchase-ui-that-explains-in-english-that-upi-is-shown-inside-stripe-checkout-after-upi-is-enabled-in-the-stripe-dashboard-and-that-users-should-not-pay-to-a-personal-upi-id",
+      "title": "Add a small \"Pay with UPI\" help section in the Upgrade/Pro purchase UI that explains (in English) that UPI is shown inside Stripe Checkout after UPI is enabled in the Stripe Dashboard, and that users should not pay to a personal UPI ID.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-concise-in-app-checklist-english-describing-the-stripe-dashboard-steps-required-to-enable-upi-for-checkout-where-to-enable-payment-methods-any-required-account-settings-and-link-to-it-from-the-pro-upgrade-area",
+      "title": "Add a concise in-app checklist (English) describing the Stripe Dashboard steps required to enable UPI for Checkout (where to enable payment methods, any required account settings), and link to it from the Pro upgrade area.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-investigate-and-fix-the-blocking-deployment-issue-where-network-deployment-fails-with-the-generic-error-deployment-didn-t-complete-so-the-app-can-be-successfully-published",
+      "title": "Investigate and fix the blocking deployment issue where network deployment fails with the generic error \"Deployment didn't complete\", so the app can be successfully published.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-pre-publish-readiness-check-in-the-admin-user-flow-to-prevent-publishing-a-build-that-cannot-take-payments-due-to-missing-stripe-configuration-and-ensure-all-user-facing-messages-remain-in-english",
+      "title": "Add a pre-publish readiness check in the admin/user flow to prevent publishing a build that cannot take payments due to missing Stripe configuration, and ensure all user-facing messages remain in English.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-perform-a-release-smoke-test-pass-for-the-core-published-user-journeys-login-profile-setup-and-pro-upgrade-checkout-initiation-and-ensure-failures-provide-clear-english-error-messages-instead-of-generic-or-technical-errors",
+      "title": "Perform a release smoke test pass for the core published user journeys (login, profile setup, and Pro upgrade checkout initiation) and ensure failures provide clear English error messages instead of generic or technical errors.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Implement login/signup (user accounts) in Bubble",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "AI-powered YouTube script generation (API integration + Bubble workflows)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Enforce free-tier usage limit of 2 scripts per user per day",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add Pro plan subscription (₹199) with unlimited script generation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement backend data models and persistence for (a) per-user script history and (b) per-user daily usage counters keyed by UTC date so the system can enforce quotas and allow users to view prior generated scripts.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement a script generation backend method that returns a coherent YouTube script in English based on the provided inputs. If external LLM API integration is not feasible under platform constraints, implement a deterministic template-based generator now and keep the API surface compatible for future replacement with an LLM.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Enable UPI payments for the Pro plan via Stripe Checkout (configure Stripe to show UPI option for India users)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Update the Stripe Checkout Session creation so UPI can appear as a payment method for eligible India users (via Stripe), using Stripe’s supported configuration (e.g., enabling automatic payment methods and/or including UPI as an allowed payment method) without integrating any personal UPI ID directly.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "YouTube Script Creator app with Internet Identity login, daily free quota, and Pro subscription",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
